@@ -1,0 +1,23 @@
+{
+  "name": "srms-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Windows desktop shell for the Student Result Management System",
+  "main": "main.js",
+  "scripts": {
+    "prepare:frontend": "npm --prefix ../frontend ci && npm --prefix ../frontend run build:desktop && node scripts/copy-frontend.js",
+    "start": "electron .",
+    "dist": "npm run prepare:frontend && electron-builder --win portable --x64"
+  },
+  "build": {
+    "appId": "edu.example.srms",
+    "productName": "SRMS",
+    "files": ["main.js", "preload.js", "app/**/*", "config.json"],
+    "directories": { "output": "release" },
+    "win": { "target": ["portable"] }
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  }
+}

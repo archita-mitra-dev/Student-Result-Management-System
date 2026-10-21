@@ -1,0 +1,20 @@
+# Render Blueprint for the API. The database lives in Neon, so only the web service is defined here.
+services:
+  - type: web
+    name: srms-api
+    runtime: node
+    # No rootDir on purpose: the migration runner reads ../database/migrations from the repository.
+    buildCommand: cd backend && npm ci --omit=dev
+    startCommand: cd backend && npm run migrate && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false        # paste the Neon connection string in the Render dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false        # your Vercel URL, for example https://your-app.vercel.app
+      - key: SETUP_TOKEN
+        sync: false        # temporary, remove after creating the first administrator

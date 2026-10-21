@@ -1,0 +1,46 @@
+{
+  "name": "srms-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "migrate": "node scripts/migrate.js",
+    "seed": "node scripts/seed.js",
+    "create-admin": "node scripts/create-admin.js",
+    "test": "node --test --test-concurrency=1 tests/calc.test.js tests/csv.test.js tests/api.test.js",
+    "test:unit": "node --test tests/calc.test.js tests/csv.test.js",
+    "build:exe": "npx @yao-pkg/pkg . --targets node22-win-x64 --output ../desktop/backend-bin/srms-api.exe"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "exceljs": "^4.4.0",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "pdfkit": "^0.20.2",
+    "pg": "^8.23.1"
+  },
+  "bin": "src/server.js",
+  "pkg": {
+    "scripts": [
+      "src/**/*.js"
+    ],
+    "assets": [
+      "node_modules/pdfkit/js/data/**/*",
+      "../database/migrations/*.sql"
+    ],
+    "targets": [
+      "node22-win-x64"
+    ],
+    "outputPath": "../desktop/backend-bin"
+  }
+}
